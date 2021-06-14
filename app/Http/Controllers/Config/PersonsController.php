@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Config;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PersonRequest;
 use App\Http\Resources\PersonCollection;
+use App\Http\Resources\PersonResource;
 use App\Models\System\Catalogs\Country;
 use App\Models\System\Catalogs\Department;
 use App\Models\System\Catalogs\District;
@@ -70,33 +72,33 @@ class PersonsController extends Controller{
         return $record;
     }
 
-    // public function store(PersonRequest $request){
-    //     if($request->state){
-    //         if($request->state != "ACTIVO"){
-    //             return [
-    //                 'success' => false,
-    //                 'message' =>'El estado del contribuyente no es activo, no puede registrarlo',
-    //             ];
-    //         }
-    //     }
+    public function store(Request $request){
+        // if($request->state){
+        //     if($request->state != "ACTIVO"){
+        //         return [
+        //             'success' => false,
+        //             'message' =>'El estado del contribuyente no es activo, no puede registrarlo',
+        //         ];
+        //     }
+        // }
 
-    //     $id = $request->input('id');
-    //     $person = Person::firstOrNew(['id' => $id]);
-    //     $person->fill($request->all());
-    //     $person->save();
+        $id = $request->input('id');
+        $person = Person::firstOrNew(['id' => $id]);
+        $person->fill($request->all());
+        $person->save();
 
-    //     $person->addresses()->delete();
-    //     $addresses = $request->input('addresses');
-    //     foreach ($addresses as $row){
-    //         $person->addresses()->updateOrCreate( ['id' => $row['id']], $row);
-    //     }
+        // $person->addresses()->delete();
+        // $addresses = $request->input('addresses');
+        // foreach ($addresses as $row){
+        //     $person->addresses()->updateOrCreate( ['id' => $row['id']], $row);
+        // }
 
-    //     return [
-    //         'success' => true,
-    //         'message' => ($id)?'Cliente editado con éxito':'Cliente registrado con éxito',
-    //         'id' => $person->id
-    //     ];
-    // }
+        return [
+            'success' => true,
+            'message' => ($id)?'Cliente editado con éxito':'Cliente registrado con éxito',
+            'id' => $person->id
+        ];
+    }
 
     public function destroy($id){
         try {
@@ -110,7 +112,7 @@ class PersonsController extends Controller{
             ];
 
         } catch (Exception $e) {
-            return ($e->getCode() == '23000') ? ['success' => false,'message' => "El esta siendo usado por otros registros, no puede eliminar"] : ['success' => false,'message' => "Error inesperado, no se pudo eliminar el {$person_type}"];
+            return ($e->getCode() == '23000') ? ['success' => false,'message' => "El esta siendo usado por otros registros, no puede eliminar"] : ['success' => false, 'message' => "Error inesperado, no se pudo eliminar el cliente"];
 
         }
     }

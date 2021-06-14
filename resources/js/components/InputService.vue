@@ -73,7 +73,12 @@
                         if (res.success) {
                             this.$emit('search', res.data)
                         } else {
-                            this.$message.error(res.message)
+                           this.$bvToast.toast(res.message, {
+                                        title: res.data.type,
+                                        variant: 'danger',
+                                        solid: true
+                                    }
+                            )
                         }
                     })
                     .catch(error => {

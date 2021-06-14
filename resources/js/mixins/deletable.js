@@ -9,39 +9,49 @@ export const deletable = {
                     buttonSize: 'sm',
                     hideHeaderClose: false,
                     centered: true
-                }).then(() => {
-                    this.$http.delete(url)
-                        .then(res => {
-                            if(res.data.success){
-                                this.$bvToast.toast(res.data.message, {
-                                        title: res.data.type,
-                                        variant: 'danger',
-                                        solid: true
-                                    }
-                                )
-                                resolve()
-                            }else{
-                                this.$bvToast.toast(res.data.message, {
-                                        title: res.data.message,
-                                        variant: 'warning',
-                                        solid: true
-                                    }
-                                )
-                                resolve()
+                }).then(value => {
+                    if (value) {
+                        this.$http.delete(url)
+                            .then(res => {
+                                if(res.data.success){
+                                    this.$bvToast.toast(res.data.message, {
+                                            title: res.data.type,
+                                            variant: 'danger',
+                                            solid: true
+                                        }
+                                    )
+                                    resolve()
+                                }else{
+                                    this.$bvToast.toast(res.data.message, {
+                                            title: res.data.message,
+                                            variant: 'warning',
+                                            solid: true
+                                        }
+                                    )
+                                    resolve()
+                                }
+                            })
+                            .catch(error => {
+                                if (error.response.status === 500) {
+                                    this.$bvToast.toast(res.data.message, {
+                                            title: 'Error al intentar eliminar',
+                                            variant: 'danger',
+                                            solid: true
+                                        }
+                                    )
+                                } else {
+                                    console.log(error.response.data.message)
+                                }
                             }
-                        })
-                        .catch(error => {
-                            if (error.response.status === 500) {
-                                // this.$message.error('Error al intentar eliminar');
-                            } else {
-                                console.log(error.response.data.message)
-                            }
-                        })
-                }).catch(error => {
+                        )
+                    }
+                })
+                .catch(err => {
                     console.log(error)
-                });
+                })
             })
         },
+
         anular(url) {
             return new Promise((resolve) => {
                 this.$confirm('¿Desea anular el registro?', 'Anular', {

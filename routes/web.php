@@ -28,15 +28,26 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/binnacles', [App\Http\Controllers\Binnacle\BinnacleController::class, 'index'])->name('binnacles');
 
-    Route::get('/persons', [App\Http\Controllers\Config\PersonsController::class, 'index'])->name('persons');
-    Route::get('/persons/columns', [App\Http\Controllers\Config\PersonsController::class, 'columns']);
-    Route::get('/persons/records', [App\Http\Controllers\Config\PersonsController::class, 'records']);
-    Route::get('/persons/tables', [App\Http\Controllers\Config\PersonsController::class, 'tables']);
-    Route::post('/persons', [App\Http\Controllers\Config\PersonsController::class, 'store']);
-	Route::delete('/persons/{person}', [App\Http\Controllers\Config\PersonsController::class, 'destroy']);
-    Route::get('/persons/enabled/{type}/{person}', [App\Http\Controllers\Config\PersonsController::class, 'enabled']);
+    Route::prefix('accounts')->group(function () {
+        Route::get('/', [App\Http\Controllers\Config\AccountsController::class, 'index'])->name('accounts');
+        Route::get('/columns', [App\Http\Controllers\Config\AccountsController::class, 'columns']);
+        Route::get('/records', [App\Http\Controllers\Config\AccountsController::class, 'records']);
+        Route::post('/', [App\Http\Controllers\Config\AccountsController::class, 'store']);
+        Route::get('/record/{id}', [App\Http\Controllers\Config\AccountsController::class, 'record']);
+        Route::delete('/{id}', [App\Http\Controllers\Config\AccountsController::class, 'destroy']);
+    });
 
-    Route::get('/accounts', [App\Http\Controllers\Config\AccountsController::class, 'index'])->name('accounts');
+    Route::prefix('persons')->group(function () {
+        Route::get('/', [App\Http\Controllers\Config\PersonsController::class, 'index'])->name('persons');
+        Route::get('/columns', [App\Http\Controllers\Config\PersonsController::class, 'columns']);
+        Route::get('/records', [App\Http\Controllers\Config\PersonsController::class, 'records']);
+        Route::get('/record/{id}', [App\Http\Controllers\Config\PersonsController::class, 'record']);
+        Route::get('/tables', [App\Http\Controllers\Config\PersonsController::class, 'tables']);
+        Route::post('/', [App\Http\Controllers\Config\PersonsController::class, 'store']);
+        Route::delete('/{id}', [App\Http\Controllers\Config\PersonsController::class, 'destroy']);
+        Route::get('/enabled/{type}/{id}', [App\Http\Controllers\Config\PersonsController::class, 'enabled']);
+    });
+
     Route::get('/costs', [App\Http\Controllers\Config\CostsController::class, 'index'])->name('costs');
 
 });

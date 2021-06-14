@@ -5,13 +5,9 @@
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
                         <h3 class="card-title">Listado de clientes</h3>
-
-                        <a class="btn btn-primary btn-sm" @click.prevent="clickCreate()"><i class="fas fa-plus"></i> Nuevo</a>
-
-                        
+                        <a class="btn btn-primary btn-sm" @click.prevent="clickCreate()"><i class="fas fa-plus"></i> Nuevo</a>                       
                     </div>
                 </div>
-
                 <div class="card-body">
                     <data-table :resource="resource">
                         <tr slot="heading">
