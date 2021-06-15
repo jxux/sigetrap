@@ -28,7 +28,7 @@
 
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-sm table-hover">
                         <thead>
                             <slot name="heading"></slot>
                         </thead>
@@ -44,16 +44,6 @@
                             v-model="pagination.current_page"
                             :total-rows="pagination.total"
                             :per-page="pagination.per_page"></b-pagination>
-                            <!-- <b-pagination :link-gen="linkGen" :number-of-pages="pagination.per_page" use-router></b-pagination> -->
-
-                        <!-- <el-pagination
-                            @current-change="getRecords"
-                            layout="total, prev, pager, next"
-                            :total="pagination.total"
-                            :current-page.sync="pagination.current_page"
-                            :page-size="pagination.per_page"
-                        >
-                        </el-pagination> -->
                     </div>
                 </div>
             </div>

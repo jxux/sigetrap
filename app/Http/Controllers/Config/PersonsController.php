@@ -95,8 +95,9 @@ class PersonsController extends Controller{
 
         return [
             'success' => true,
+            'type' => 'Cliente',
             'message' => ($id)?'Cliente editado con éxito':'Cliente registrado con éxito',
-            'id' => $person->id
+            // 'id' => $person->id
         ];
     }
 

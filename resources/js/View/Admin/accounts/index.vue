@@ -4,8 +4,8 @@
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Listado de clientes</h3>
-                        <a class="btn btn-primary btn-sm" v-b-modal.modal-prevent-closing><i class="fas fa-plus"></i> Nuevo</a>                       
+                        <h3 class="card-title">Listado de Cuentas</h3>
+                        <a class="btn btn-primary btn-sm" @click.prevent="clickEdit()"><i class="fas fa-plus"></i> Nuevo</a>                       
                     </div>
                 </div>
                 <div class="card-body">
@@ -53,7 +53,7 @@ export default {
     created() {
         axios.get(`/${this.resource}/records`).then((resindex) => {
         this.items = resindex.data.data;
-        this.totalRows = resindex.data.meta.total;
+        // this.totalRows = resindex.data.meta.total;
         // this.perPage = resindex.data.meta.per_page;
         });
     },

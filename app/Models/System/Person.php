@@ -17,7 +17,6 @@ class Person extends Model
     protected $table = 'persons';
     protected $with = ['identity_document_type', 'country', 'department', 'province', 'district'];
     protected $fillable = [
-        'type',
         'identity_document_type_id',
         'number',
         'name',

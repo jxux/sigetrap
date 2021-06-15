@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Config;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AccountResource;
-use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\AccountCollection;
 use App\Models\System\Binnacles_category;
 use Exception;
 use Illuminate\Http\Request;
 
 class AccountsController extends Controller{
+    
     public function columns(){
         return [
             'name' => 'Nombre',
@@ -22,11 +23,9 @@ class AccountsController extends Controller{
     }
 
     public function records(Request $request){
-        $records = Binnacles_category::
-        // where($request->column, 'like', "%{$request->value}%")
-        //                     ->
-                            orderBy('id', 'desc');
-        return new CategoryCollection($records->paginate(10));
+        $records = Binnacles_category::where($request->column, 'like', "%{$request->value}%")
+                            ->orderBy('id', 'desc');
+        return new AccountCollection($records->paginate(10));
     }
 
     public function record($id){

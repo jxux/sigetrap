@@ -27,7 +27,7 @@ Vue.prototype.$http = axios;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-Vue.component('binnacle', require('./View/Binnacle/BinnacleComponent.vue').default);
+Vue.component('binnacle', require('./View/Binnacle/index.vue').default);
 Vue.component('Account', require('./View/Admin/accounts/index.vue').default);
 Vue.component('cost', require('./View/Admin/costs/index.vue').default);
 Vue.component('persons', require('./View/Admin/persons/index.vue').default);

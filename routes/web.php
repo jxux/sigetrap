@@ -26,7 +26,17 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/binnacles', [App\Http\Controllers\Binnacle\BinnacleController::class, 'index'])->name('binnacles');
+
+
+    Route::prefix('binnacles')->group(function () {
+        Route::get('/', [App\Http\Controllers\Binnacle\BinnacleController::class, 'index'])->name('binnacles');
+        Route::get('/columns', [App\Http\Controllers\Binnacle\BinnacleController::class, 'columns']);
+        Route::get('/records', [App\Http\Controllers\Binnacle\BinnacleController::class, 'records']);
+        Route::get('/tables', [App\Http\Controllers\Binnacle\BinnacleController::class, 'tables']);
+        Route::post('/', [App\Http\Controllers\Binnacle\BinnacleController::class, 'store']);
+        Route::get('/record/{id}', [App\Http\Controllers\Binnacle\BinnacleController::class, 'record']);
+        Route::delete('/{id}', [App\Http\Controllers\Binnacle\BinnacleController::class, 'destroy']);
+    });
 
     Route::prefix('accounts')->group(function () {
         Route::get('/', [App\Http\Controllers\Config\AccountsController::class, 'index'])->name('accounts');
@@ -35,6 +45,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/', [App\Http\Controllers\Config\AccountsController::class, 'store']);
         Route::get('/record/{id}', [App\Http\Controllers\Config\AccountsController::class, 'record']);
         Route::delete('/{id}', [App\Http\Controllers\Config\AccountsController::class, 'destroy']);
+    });
+
+    Route::prefix('costs')->group(function () {
+        Route::get('/', [App\Http\Controllers\Config\CostsController::class, 'index'])->name('costs');
+        Route::get('/columns', [App\Http\Controllers\Config\CostsController::class, 'columns']);
+        Route::get('/records', [App\Http\Controllers\Config\CostsController::class, 'records']);
+        Route::post('/', [App\Http\Controllers\Config\CostsController::class, 'store']);
+        Route::get('/record/{id}', [App\Http\Controllers\Config\CostsController::class, 'record']);
+        Route::delete('/{id}', [App\Http\Controllers\Config\CostsController::class, 'destroy']);
     });
 
     Route::prefix('persons')->group(function () {
@@ -48,6 +67,5 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/enabled/{type}/{id}', [App\Http\Controllers\Config\PersonsController::class, 'enabled']);
     });
 
-    Route::get('/costs', [App\Http\Controllers\Config\CostsController::class, 'index'])->name('costs');
 
 });

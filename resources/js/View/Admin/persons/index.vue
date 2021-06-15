@@ -79,7 +79,9 @@ export default {
     methods: {
         clickCreate(recordId = null) {
             this.recordId = recordId;
-            this.showDialog = true;
+            this.$nextTick(() => {
+                this.$bvModal.show('modal-prevent-closing')
+            })
         },
         clickDelete(id) {
             this.destroy(`/${this.resource}/${id}`).then(() =>

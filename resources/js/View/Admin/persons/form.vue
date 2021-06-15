@@ -1,6 +1,6 @@
 <template>
-    <b-modal v-model="showDialog" title="Nuevo cliente" size="lg" @show="create" @close="close" @hidden="close">
-        <b-form @submit.prevent="submit">
+    <b-modal id="modal-prevent-closing" ref="modal" title="Cliente" @show="resetModal" @hidden="resetModal" @ok="handleOk" size="lg">
+        <form @submit.stop.prevent="handleSubmit">
             <b-container>
                 <b-row>
                     <b-col cols="2">
@@ -41,16 +41,22 @@
                     <b-col>
                         <b-form-group label="País: ">
                             <b-form-select v-model="form.country_id" :options="countries" value-field="id" text-field="description" size="sm" required></b-form-select>
+                            <!-- <b-form-input list="my-list-id"></b-form-input>
+                                <datalist id="my-list-id">
+                                <option>Manual Option</option>
+                                <option v-for="size in countries" v-key="id">{{ size }}</option>
+                            </datalist> -->
                         </b-form-group>
                     </b-col>
+
                     <b-col>
                         <b-form-group label="Departamento: ">
-                            <b-form-select v-model="form.department_id" :options="all_departments" @change="filterProvince" value-field="id" text-field="description" size="sm"></b-form-select>
+                            <b-form-select v-model="form.department_id" :options="all_departments" @input="filterProvince" value-field="id" text-field="description" size="sm"></b-form-select>
                         </b-form-group>
                     </b-col>
                     <b-col>
                         <b-form-group label="Provincia: ">
-                            <b-form-select v-model="form.province_id" :options="all_provinces" @change="filterDistrict" value-field="id" text-field="description" size="sm"></b-form-select>
+                            <b-form-select v-model="form.province_id" :options="all_provinces" @input="filterDistrict" value-field="id" text-field="description" size="sm"></b-form-select>
                         </b-form-group>
                     </b-col>
 
@@ -86,20 +92,7 @@
                     </b-col>
                 </b-row>
             </b-container>
-            
-            <template #modal-footer>
-                <div class="w-100">
-                    <b-button variant="dark" size="sm" class="float-left" @click="close">
-                        Cancelar
-                    </b-button>
-                    <!-- <b-overlay :show="loading_submit" rounded opacity="0.6" spinner-small spinner-variant="primary" class="d-inline-block" @hidden="onHidden"> -->
-                        <b-button variant="primary" size="sm" class="float-right" native-type="submit">
-                            Guardar
-                        </b-button>
-                    <!-- </b-overlay> -->
-                </div>
-            </template>
-        </b-form>
+        </form>
     </b-modal>
 </template>
 
@@ -158,7 +151,6 @@ export default {
             this.errors = {}
             this.form = {
                 id: null,
-                type: this.type,
                 identity_document_type_id: '6',
                 number: '',
                 name: null,
@@ -226,6 +218,56 @@ export default {
                     })
             }
         },
+
+        checkFormValidity() {
+            const valid = this.$refs.form.checkValidity()
+            this.nameState = valid
+            this.codeState = valid
+            return valid
+        },
+        resetModal() {
+            // this.form = {}
+            // this.nameState = null
+            // this.codeState = null
+            this.create()
+        },
+        handleOk(bvModalEvt) {
+            // Prevent modal from closing
+            bvModalEvt.preventDefault()
+            // Trigger submit handler
+            this.handleSubmit()
+        },
+        handleSubmit() {
+            // Exit when the form isn't valid
+            if (!this.checkFormValidity()) {
+                return
+            }
+            // Push the name to submitted names
+            axios.post(`/${this.resource}`, this.form)
+                .then(response => {
+                    if (response.data.success) {
+                        console.log(response)
+                        this.$bvToast.toast(response.data.message, {
+                            title: response.data.type,
+                            variant: 'success',
+                            solid: true
+                        })
+                        this.$eventHub.$emit('reloadData')
+                    } else {
+                        this.$bvToast.toast(response.data.message, {
+                            title: response.data.type,
+                            variant: 'danger',
+                            solid: true
+                        })
+                    }
+                })
+            
+            // Hide the modal manually
+            this.$nextTick(() => {
+                this.$bvModal.hide('modal-prevent-closing')
+            })
+        },
+
         clickAddAddress(){
             /* this.form.more_address.push({
                 location_id: [],

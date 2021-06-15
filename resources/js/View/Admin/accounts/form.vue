@@ -7,32 +7,8 @@
             <b-form-group label="Name" label-for="name-input" invalid-feedback="Descripción is required" :state="nameState">
                 <b-form-input id="name-input" v-model="form.name" :state="nameState" required></b-form-input>
             </b-form-group>
-            {{form}}
-            {{recordId}}
         </form>
     </b-modal>    
-    
-    <!-- <b-modal v-model="showDialog" title="Nuevo cliente" size="lg" @show="create" @close="close" @hidden="close">
-        <b-form @submit="submit" @reset="Reset">
-            <b-container>
-                <b-row>
-                    <b-col cols="2">
-                        <b-form-group label="Codigo: ">
-                            <b-form-input size="sm" v-model="form.code" placeholder="Ingrese Código" required></b-form-input>
-                        </b-form-group>
-                    </b-col>
-                    <b-col>
-                        <b-form-group label="Descripción: ">
-                            <b-form-input size="sm" v-model="form.name" required></b-form-input>
-                        </b-form-group>
-                    </b-col>
-                </b-row>
-            </b-container>
-            <b-button type="submit" variant="primary">Submit</b-button>
-            <b-button type="reset" variant="danger">Reset</b-button>
-            {{form}}
-        </b-form>
-    </b-modal> -->
 </template>
 
 <script>
@@ -70,8 +46,7 @@ export default {
             return valid
         },
         resetModal() {
-            this.form.name = ''
-            this.form.code = ''
+            this.form = {}
             this.nameState = null
             this.codeState = null
             this.create()
