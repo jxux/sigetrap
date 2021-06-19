@@ -1,22 +1,21 @@
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Password Reminder Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are the default lines which match reasons
+    | that are given by the password broker for a password update attempt
+    | has failed, such as for an invalid token or invalid new password.
+    |
+    */
 
-	/*
-	|--------------------------------------------------------------------------
-	| Restablecer contraseña de líneas de idioma
-	|--------------------------------------------------------------------------
-	|
-        | Las siguientes líneas de idioma son las líneas predeterminadas que coinciden con las razones
-        | que proporciona la contraseñas de los usuario para un intento de actualización que
-	| es invalida, por ejemplo, para un token no válido o una nueva contraseña no válida.
-	|
-	*/
-
-    'password' => 'Las contraseñas deben contener al menos 6 caracters y coincidir.',
-    'reset' => 'Su contraseña ha sido cambiada.',
-    'sent' => 'Le hemos enviado un correo de cambio de contraseña!',
-    'token' => 'El código de cambio de contraseña es inválido.',
-    'user' => "No podemos encontrar un usuario con ese nombre.",
-
+    'password' => 'Las contraseñas deben coincidir y contener al menos 6 caracteres',
+    'reset' => '¡Tu contraseña ha sido restablecida!',
+    'sent' => '¡Te hemos enviado por correo el enlace para restablecer tu contraseña!',
+    'token' => 'El token de recuperación de contraseña es inválido.',
+    'user' => 'No podemos encontrar ningún usuario con ese correo electrónico.',
+    'throttled' => 'Espere antes de volver a intentarlo.',
 ];

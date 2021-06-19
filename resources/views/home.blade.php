@@ -21,7 +21,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <example-component></example-component>
+        <dashboard/>
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->

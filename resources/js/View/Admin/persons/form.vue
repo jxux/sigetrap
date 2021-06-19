@@ -239,14 +239,14 @@ export default {
         },
         handleSubmit() {
             // Exit when the form isn't valid
-            if (!this.checkFormValidity()) {
-                return
-            }
+            // if (!this.checkFormValidity()) {
+            //     return
+            // }
             // Push the name to submitted names
             axios.post(`/${this.resource}`, this.form)
                 .then(response => {
                     if (response.data.success) {
-                        console.log(response)
+                        // console.log(response)
                         this.$bvToast.toast(response.data.message, {
                             title: response.data.type,
                             variant: 'success',

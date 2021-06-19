@@ -25,8 +25,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('{type}/{number}', [App\Http\Controllers\Config\ServiceController::class, 'service']);
     });
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+    Route::prefix('home')->group(function () {
+        Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/planning', [App\Http\Controllers\HomeController::class, 'planning']);
+    });
 
     Route::prefix('binnacles')->group(function () {
         Route::get('/', [App\Http\Controllers\Binnacle\BinnacleController::class, 'index'])->name('binnacles');

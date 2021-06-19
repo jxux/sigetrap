@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Binnacle;
 use App\CoreJxux\Requests\Inputs\Common\CategoryInput;
 use App\CoreJxux\Requests\Inputs\Common\PersonInput;
 use App\CoreJxux\Requests\Inputs\Common\ServiceInput;
+use App\CoreJxux\Requests\Inputs\Common\Timeinput;
 use App\CoreJxux\Requests\Inputs\Common\UserInput;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BinnacleRequest;
 use App\Http\Resources\BinnacleCollection;
 use App\Http\Resources\BinnacleResource;
 use App\Models\System\Binnacle;
 use App\Models\System\Binnacles_category;
 use App\Models\System\Binnacles_service;
 use App\Models\System\Person;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -21,9 +24,9 @@ class BinnacleController extends Controller{
     public function columns(){
         return [
             'description' => 'Descripción',
-            'client' => 'Cliente',
-            'category' => 'Categoría',
-            'service' => 'Servicio',
+            'client_id' => 'Cliente',
+            'category_id' => 'Cuentas',
+            'service_id' => 'Centro de costos',
         ];
     }
 
@@ -32,10 +35,17 @@ class BinnacleController extends Controller{
     }
 
     public function records(Request $request){
-        $records = Binnacle::where('user_id', auth()->id())
-                            // ->whereOn($request->column, 'like', "%{$request->value}%")
-                            ->orderBy('date','desc')
-                            ->orderBy('end_time','desc');
+        if (!$request->value) {
+            $records = Binnacle::where('user_id', auth()->id())
+                                ->orderBy('date','desc')
+                                ->orderBy('end_time','desc');
+        }else{
+            $records = Binnacle::where('user_id', auth()->id())
+                ->orWhere($request->column, 'like', "%{$request->value}%")
+                ->orderBy('date','desc')
+                ->orderBy('end_time','desc');
+        }
+
         return new BinnacleCollection($records->paginate(20));
     }
 
@@ -43,7 +53,6 @@ class BinnacleController extends Controller{
         $clients = $this->table('clients');
         $accounts = $this->table('accounts');
         $costs = $this->table('costs');
-        // $company = Company::active();
         return compact('clients', 'accounts', 'costs');
     }
 
@@ -94,8 +103,8 @@ class BinnacleController extends Controller{
         }
     }
 
-    public function store(Request $request){
-        $data = self::convert($request);
+    public function store(BinnacleRequest $request){
+        self::convert($request);
         $id = $request->input('id');
         $event = Binnacle::firstOrNew(['id' => $id]);
         $event->fill($request->all());
@@ -103,21 +112,27 @@ class BinnacleController extends Controller{
 
         return [
             'success' => true,
+            'type' => 'Parte Diario',
             'message' => ($id)?'Evento editado con éxito':'Evento registrado con éxito',
-            'id' => $event->id
+            // 'id' => $event->id
         ];
     }
 
+    public static function time($start_time, $end_time){
+        $time = Carbon::parse($start_time)->diffInMinutes($end_time);
+        $hour = intdiv($time, 60).':'. ($time % 60);
+        return $hour;
+    }
+
     public static function convert($inputs){
-        // $company = Company::active();
         $user_id = auth()->id();
         $values = [
             'user_id' => auth()->id(),
-            // 'external_id' => Str::uuid()->toString(),
             'client' => PersonInput::set($inputs['client_id']),
             'category' => CategoryInput::set($inputs['category_id']),
             'service' => ServiceInput::set($inputs['service_id']),
             'user' => UserInput::set($user_id),
+            'hour' => self::time($inputs['start_time'], $inputs['end_time']),
         ];
 
         $inputs->merge($values);
@@ -136,6 +151,7 @@ class BinnacleController extends Controller{
 
             return [
                 'success' => true,
+                'type' => 'Parte Diario',
                 'message' => 'Evento eliminado con éxito'
             ];
         } catch (Exception $e){

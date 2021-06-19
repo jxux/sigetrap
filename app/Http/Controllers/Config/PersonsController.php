@@ -28,19 +28,6 @@ class PersonsController extends Controller{
     }
 
     public function index(){
-
-        // if($request->ajax()){
-        //     return Parte::join('clientes','clientes.id','=','partes.cliente_id')
-        //     ->join('c_costos','c_costos.id','=','partes.costo_id')
-        //     ->join('cuentas','cuentas.id','=','partes.cuenta_id')
-        //     ->join('users','users.id','=','partes.user_id')
-        //     ->select('partes.*', 'r_social','nombre','nombrec')
-        //     ->where('user_id', auth()->id())
-        //     ->get();
-            
-        // }else{
-        //     return view('General.partes.index');
-        // }
         return view('config.persons');
     }
 

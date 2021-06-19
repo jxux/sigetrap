@@ -15,8 +15,8 @@
                             <th>Fecha</th>
                             <th>H. Inicio</th>
                             <th>H. Fin</th>
-                            <th>Cliente</th>
                             <th>Tiempo</th>
+                            <th>Cliente</th>
                             <th>Cuenta</th>
                             <th>C. Costo</th>
                             <th>Periodo</th>
@@ -29,13 +29,17 @@
                             <td>{{ row.date }}</td>
                             <td>{{ row.start_time }}</td>
                             <td>{{ row.end_time }}</td>
-                            <td>{{ row.client }}</td>
                             <td>{{ row.hour }}</td>
+                            <td>{{ row.client}}</td>
                             <td>{{ row.category }}</td>
                             <td>{{ row.service }}</td>
                             <td>{{ row.period }}</td>
                             <td>{{ row.description }}</td>
-                            <td>{{ row.status }}</td>
+                            <td>
+                                <b-badge v-if="row.status <= 25" variant="danger">{{ row.status }} %</b-badge>
+                                <b-badge v-else-if="row.status < 100" variant="warning">{{ row.status }} %</b-badge>
+                                <b-badge v-else-if="row.status === 100" variant="success">Terminado</b-badge>
+                            </td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-info"  @click.prevent="clickCreate(row.id)"><i class="far fa-edit"></i></button>
@@ -68,9 +72,9 @@ export default {
     },
     created() {
         axios.get(`/${this.resource}/records`).then((resindex) => {
-        this.items = resindex.data.data;
-        this.totalRows = resindex.data.meta.total;
-        // this.perPage = resindex.data.meta.per_page;
+            this.items = resindex.data.data;
+            // this.totalRows = resindex.data.meta.total;
+            // this.perPage = resindex.data.meta.per_page;
         });
     },
     computed: {

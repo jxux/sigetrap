@@ -36,14 +36,27 @@
                             <slot v-for="(row, index) in records" :row="row" :index="customIndex(index)"></slot>
                         </tbody>
                     </table>
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                            <li v-for="page in pagination.last_page" class="page-item"><a class="page-link" href="#">{{page.current_page}}</a></li>
+                            <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
                     <div>
-                        <b-pagination class="mt-5"
+                        {{ pagination }}
+                        <!-- @change="getRecords" -->
+                        <!-- <b-pagination class="mt-5"
                             pills 
                             align="right"
+                            
                             @change="getRecords"
-                            v-model="pagination.current_page"
-                            :total-rows="pagination.total"
-                            :per-page="pagination.per_page"></b-pagination>
+                            v-model="currentPage"
+                            :total-rows="rows"
+                            :per-page="perPage">
+                        </b-pagination> -->
                     </div>
                 </div>
             </div>
@@ -74,7 +87,6 @@ export default {
                 column: null,
                 value: null
             },
-            currentPage: 2,
             columns: [],
             records: [],
             pagination: {},
@@ -88,8 +100,7 @@ export default {
     },
     async mounted() {
         let column_resource = _.split(this.resource, "/");
-        await this.$http
-            .get(`/${_.head(column_resource)}/columns`)
+        await this.$http.get(`/${_.head(column_resource)}/columns`)
             .then(response => {
                 this.columns = response.data;
                 this.search.column = _.head(Object.keys(this.columns));
@@ -104,8 +115,7 @@ export default {
         },
         getRecords() {
             this.loading_submit = true;
-            return this.$http
-                .get(`/${this.resource}/records?${this.getQueryParameters()}`)
+            return this.$http.get(`/${this.resource}/records?${this.getQueryParameters()}`)
                 // .get(`/${this.resource}/records?page=2`)
                 .then(response => {
                     this.records = response.data.data;
@@ -125,7 +135,7 @@ export default {
             }
             return queryString.stringify({
                 page: this.pagination.current_page,
-                limit: this.limit,
+                // limit: this.limit,
                 ...this.search
             });
         },
