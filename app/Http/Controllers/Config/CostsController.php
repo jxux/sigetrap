@@ -22,11 +22,13 @@ class CostsController extends Controller{
     }
 
     public function records(Request $request){
-        $records = Binnacles_service::
-        where($request->column, 'like', "%{$request->value}%")
-                            ->
-                            orderBy('id', 'desc');
-        return new CostCollection($records->paginate(10));
+        if ($request->value) {
+            $records = Binnacles_service::where($request->column, 'like', "%{$request->value}%")
+                                ->orderBy('code', 'desc');
+        }else{
+            $records = Binnacles_service::orderBy('code');
+        }
+        return new CostCollection($records->paginate(20));
     }
 
     public function record($id){

@@ -32,12 +32,13 @@ class PersonsController extends Controller{
     }
 
     public function records(Request $request){
-        $records = Person::
-        // where($request->column, 'like', "%{$request->value}%")
-        //                     ->
-                            orderBy('name');
-
-        return new PersonCollection($records->paginate(10));
+        if ($request->value) {
+            $records = Person::where($request->column, 'like', "%{$request->value}%")
+                            ->orderBy('internal_code');
+        }else{
+            $records = Person::orderBy('internal_code');
+        }
+        return new PersonCollection($records->paginate(20));
     }
 
     public function tables(){

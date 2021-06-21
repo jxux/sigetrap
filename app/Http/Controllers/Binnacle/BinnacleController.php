@@ -35,15 +35,15 @@ class BinnacleController extends Controller{
     }
 
     public function records(Request $request){
-        if (!$request->value) {
+        if ($request->value) {
             $records = Binnacle::where('user_id', auth()->id())
+                                ->Where($request->column, 'like', "%{$request->value}%")
                                 ->orderBy('date','desc')
                                 ->orderBy('end_time','desc');
         }else{
             $records = Binnacle::where('user_id', auth()->id())
-                ->orWhere($request->column, 'like', "%{$request->value}%")
-                ->orderBy('date','desc')
-                ->orderBy('end_time','desc');
+                                ->orderBy('date','desc')
+                                ->orderBy('end_time','desc');
         }
 
         return new BinnacleCollection($records->paginate(20));

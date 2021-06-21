@@ -18,7 +18,7 @@
                     <b-col>
                         <b-form-group label="Hora de Termino" label-for="end_time-input" :invalid-feedback="errors.end_time" :state="false">
                             <!-- <b-form-timepicker v-model="form.end_time" :state="errors.end_time" locale="en" size="sm"></b-form-timepicker> -->
-                            <b-form-input type="time" v-model="form.end_time" :state="null" size="sm"/>
+                            <b-form-input type="time" v-model="form.end_time" :state="errors.end_time" size="sm"/>
                         </b-form-group>
                     </b-col>
                 </b-row>

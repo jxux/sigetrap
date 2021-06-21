@@ -23,9 +23,13 @@ class AccountsController extends Controller{
     }
 
     public function records(Request $request){
-        $records = Binnacles_category::where($request->column, 'like', "%{$request->value}%")
-                            ->orderBy('id', 'desc');
-        return new AccountCollection($records->paginate(10));
+        if ($request->value) {
+            $records = Binnacles_category::where($request->column, 'like', "%{$request->value}%")
+                                ->orderBy('code', 'desc');
+        }else{
+            $records = Binnacles_category::orderBy('code');
+        }
+        return new AccountCollection($records->paginate(20));
     }
 
     public function record($id){

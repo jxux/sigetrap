@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Config\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('home')->group(function () {
-        Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->Middleware('can:admin.index');
         Route::get('/planning', [App\Http\Controllers\HomeController::class, 'planning']);
     });
 
@@ -69,5 +70,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/enabled/{type}/{id}', [App\Http\Controllers\Config\PersonsController::class, 'enabled']);
     });
 
+    Route::prefix('users')->group(function () {
+        Route::get('/', [App\Http\Controllers\Config\UserController::class, 'index'])->name('users');
+        Route::get('/columns', [App\Http\Controllers\Config\UserController::class, 'columns']);
+        Route::get('/records', [App\Http\Controllers\Config\UserController::class, 'records']);
+        Route::get('/record/{id}', [App\Http\Controllers\Config\UserController::class, 'record']);
+        Route::get('/tables', [App\Http\Controllers\Config\UserController::class, 'tables']);
+        Route::post('/', [App\Http\Controllers\Config\UserController::class, 'store']);
+        Route::delete('/{id}', [App\Http\Controllers\Config\UserController::class, 'destroy']);
+        Route::get('/enabled/{type}/{id}', [App\Http\Controllers\Config\UserController::class, 'enabled']);
+    });
+    // Route::resource('users', UserController::class)->only('index', 'edit', 'update')->names('users');
 
 });

@@ -47,7 +47,7 @@ class BinnacleRequest extends FormRequest{
             ],
             'description' => [
                 'required',
-                'min:15'
+                'min:10'
             ],
             'status' => [
                 'required',

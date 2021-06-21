@@ -52,7 +52,7 @@ export default {
 		    showDialog: false,
             recordId: null,
             items: [],
-            resource: "persons",
+            resource: "users",
         };
     },
     created() {
