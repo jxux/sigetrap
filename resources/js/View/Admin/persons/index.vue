@@ -52,14 +52,14 @@ export default {
 		    showDialog: false,
             recordId: null,
             items: [],
-            resource: "users",
+            resource: "persons",
         };
     },
     created() {
         axios.get(`/${this.resource}/records`).then((resindex) => {
-        this.items = resindex.data.data;
-        this.totalRows = resindex.data.meta.total;
-        // this.perPage = resindex.data.meta.per_page;
+            this.items = resindex.data.data;
+            this.totalRows = resindex.data.meta.total;
+            // this.perPage = resindex.data.meta.per_page;
         });
     },
     computed: {

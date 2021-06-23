@@ -1,13 +1,8 @@
 <template>
-    <b-modal id="modal-prevent-closing" ref="modal" title="Cliente" @show="resetModal" @hidden="resetModal" @ok="handleOk" size="lg">
+    <b-modal id="modal-prevent-closing" ref="modal" :title="titleDialog" @show="resetModal" @hidden="resetModal" @ok="handleOk" size="xl">
         <form @submit.stop.prevent="handleSubmit">
             <b-container>
                 <b-row>
-                    <b-col cols="2">
-                        <b-form-group label="Codigo: ">
-                            <b-form-input size="sm" v-model="form.internal_code" placeholder="Ingrese codigo" required></b-form-input>
-                        </b-form-group>
-                    </b-col>
                     <b-col>
                         <b-form-group label="Tipo Doc. Identidad: ">
                             <b-form-select v-model="form.identity_document_type_id" :options="identity_document_types" value-field="id" text-field="description" size="sm" required></b-form-select>
@@ -15,22 +10,17 @@
                     </b-col>
                     <b-col>
                         <b-form-group label="Número: ">
-                            <x-input-service :identity_document_type_id="form.identity_document_type_id" v-model="form.number" @search="searchNumber"></x-input-service>
+                            <x-input-service :identity_document_type_id="form.identity_document_type_id" v-model="form.dni" @search="searchNumber"></x-input-service>
                         </b-form-group>
                     </b-col>
-                </b-row>
-            </b-container>
-            
-            <b-container>
-                <b-row>
                     <b-col>
                         <b-form-group label="Nombre: ">
                             <b-form-input size="sm" v-model="form.name" required></b-form-input>
                         </b-form-group>
                     </b-col>
                     <b-col>
-                        <b-form-group label="Nombre comercial: ">
-                            <b-form-input size="sm" v-model="form.trade_name"></b-form-input>
+                        <b-form-group label="Nick: ">
+                            <b-form-input size="sm" v-model="form.nick_name"></b-form-input>
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -38,48 +28,56 @@
 
             <b-container>
                 <b-row>
-                    <b-col>
+                    <b-col cols="2">
                         <b-form-group label="País: ">
                             <b-form-select v-model="form.country_id" :options="countries" value-field="id" text-field="description" size="sm" required></b-form-select>
-                            <!-- <b-form-input list="my-list-id"></b-form-input>
-                                <datalist id="my-list-id">
-                                <option>Manual Option</option>
-                                <option v-for="size in countries" v-key="id">{{ size }}</option>
-                            </datalist> -->
                         </b-form-group>
                     </b-col>
 
-                    <b-col>
+                    <b-col cols="2">
                         <b-form-group label="Departamento: ">
                             <b-form-select v-model="form.department_id" :options="all_departments" @input="filterProvince" value-field="id" text-field="description" size="sm"></b-form-select>
                         </b-form-group>
                     </b-col>
-                    <b-col>
+                    <b-col cols="2">
                         <b-form-group label="Provincia: ">
                             <b-form-select v-model="form.province_id" :options="all_provinces" @input="filterDistrict" value-field="id" text-field="description" size="sm"></b-form-select>
                         </b-form-group>
                     </b-col>
-
-                </b-row>
-            </b-container>
-
-            <b-container>
-                <b-row>
-                    <b-col cols="4">
+                    <b-col cols="2">
                         <b-form-group label="Distrito: ">
                             <b-form-select v-model="form.district_id" :options="all_districts" value-field="id" text-field="description" size="sm"></b-form-select>
                         </b-form-group>
                     </b-col>
-                    <b-col cols="8">
+                    <b-col>
                         <b-form-group label="Dirección: ">
                             <b-form-input size="sm" v-model="form.address"></b-form-input>
                         </b-form-group>
                     </b-col>
                 </b-row>
             </b-container>
-            
+
             <b-container>
                 <b-row>
+                    <b-col>
+                    <b-form-group label="Genero" v-slot="{ ariaDescribedby }">
+                        <b-form-radio-group
+                            id="btn-radios-2"
+                            v-model="form.sex"
+                            :options="sex"
+                            :aria-describedby="ariaDescribedby"
+                            button-variant="outline-primary"
+                            size="sm"
+                            name="radio-btn-outline"
+                            buttons>
+                        </b-form-radio-group>
+                    </b-form-group>
+                    </b-col>
+                    <b-col>
+                        <b-form-group label="Fecha de Nacimiento" :invalid-feedback="errors.date_birth" :state="false">
+                            <b-form-input type="date" v-model="form.date_birth" :state="errors.date_birth" size="sm"/>
+                        </b-form-group>
+                    </b-col>
                     <b-col>
                         <b-form-group label="Teléfono: ">
                             <b-form-input size="sm" v-model="form.telephone"></b-form-input>
@@ -92,6 +90,28 @@
                     </b-col>
                 </b-row>
             </b-container>
+
+            <b-container>
+                <b-row>
+                    <b-col>
+                        <b-form-group label="Contraseña: ">
+                            <b-form-input type="password" size="sm" v-model="form.password"></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col>
+                        <b-form-group label="Rol: ">
+                            <b-form-checkbox-group
+                                v-model="form.roles"
+                                :options="roles"
+                                value-field="id"
+                                text-field="name"
+                                name="flavour-1">
+                            </b-form-checkbox-group>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+            </b-container>
+            {{form}}
         </form>
     </b-modal>
 </template>
@@ -104,11 +124,15 @@ export default {
     data() {
         return {
             loading_submit: false,
-            resource: "persons",
+            resource: "users",
+            titleDialog: null,
             name: "",
             form: {},
-            nameState: null,
-            submittedNames: [],
+            roles:[],
+            sex: [
+                { text: 'Femenino', value: 'F' },
+                { text: 'Masculino', value: 'M' },
+            ],
             errors: {},
             api_service_token:false,
             countries: [],
@@ -131,6 +155,7 @@ export default {
                 this.all_districts = resindex.data.districts;
                 this.identity_document_types = resindex.data.identity_document_types;
                 this.locations = resindex.data.locations;
+                this.roles = resindex.data.roles;
                 this.person_types = resindex.data.person_types;
                 // this.perPage = resindex.data.meta.per_page;
             }
@@ -151,7 +176,7 @@ export default {
             this.errors = {}
             this.form = {
                 id: null,
-                identity_document_type_id: '6',
+                identity_document_type_id: '1',
                 number: '',
                 name: null,
                 trade_name: null,
@@ -161,18 +186,11 @@ export default {
                 district_id: null,
                 address: null,
                 telephone: null,
-                condition: null,
-                state: null,
                 email: null,
-                perception_agent: false,
-                percentage_perception:0,
                 person_type_id:null,
                 comment:null,
+                roles: null,
                 addresses: [],
-                contact: {
-                    full_name: null,
-                    phone: null,
-                },
             }
         },
         async opened(){
@@ -207,6 +225,7 @@ export default {
                 axios.get(`/${this.resource}/record/${this.recordId}`)
                     .then(response => {
                         this.form = response.data.data
+                        
                         if (response.data.data.contact == null) {
                             this.form.contact = {
                                 full_name: null,
@@ -217,6 +236,8 @@ export default {
                         this.filterDistricts()
                     })
             }
+
+            this.titleDialog = (this.recordId)? 'Editar Usuario':'Nuevo Usuario'
         },
 
         checkFormValidity() {
@@ -381,7 +402,6 @@ export default {
             (this.recordId == null) ? this.setDataDefaultCustomer() : null
         },
         setDataDefaultCustomer(){
-
             if(this.form.identity_document_type_id == '0'){
                 this.form.number = '99999999'
                 this.form.name = "Clientes - Varios"
@@ -389,7 +409,6 @@ export default {
                 this.form.number = ''
                 this.form.name = null
             }
-
         },
         close(){
             this.$eventHub.$emit('initInputPerson')
@@ -402,6 +421,7 @@ export default {
         searchNumber(data){
             this.form.name = (this.form.identity_document_type_id === '1')?data.nombre_completo:data.nombre_o_razon_social;
             this.form.trade_name = (this.form.identity_document_type_id === '6')?data.nombre_o_razon_social:'';
+            this.form.date_birth = data.fecha_nacimiento;
             this.form.location_id = data.ubigeo;
             this.form.address = data.direccion;
             this.form.department_id = (data.ubigeo) ? (data.ubigeo[0] != '-' ? data.ubigeo[0] : null) : null;

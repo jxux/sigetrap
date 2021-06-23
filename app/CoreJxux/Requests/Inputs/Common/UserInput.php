@@ -9,6 +9,7 @@ class UserInput{
         return [
             'id' => $usuario->id,
             'name' => $usuario->name,
+            'nick_name' => $usuario->nick_name,
             'email' => $usuario->email,
             'type' => $usuario->type
         ];

@@ -25,8 +25,17 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('api_token')->unique()->nullable();
+            $table->char('country_id', 2);
+            $table->char('department_id', 2)->nullable();
+            $table->char('province_id', 4)->nullable();
+            $table->char('district_id', 6)->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->foreign('district_id')->references('id')->on('districts');
         });
 
         DB::table('users')->insert([
@@ -35,6 +44,7 @@ class CreateUsersTable extends Migration
             'nick_name'=> 'Master',
             'name' => 'Cuenta Master',
             'email' => 'master@jjmm.com.pe',
+            'country_id' => 'PE',
             // 'sex' => '',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
         ]);
@@ -46,6 +56,7 @@ class CreateUsersTable extends Migration
             'name' => 'LUZ MARLENE ESCALANTE ZAPATA',
             'email' => 'lescalante@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$ApJnaHTszDAp5DBypMdITurlKP4j9.ovIZG9D7s0VAY6g1.0x0TTC'
         ]);
         DB::table('users')->insert([
@@ -55,6 +66,7 @@ class CreateUsersTable extends Migration
             'name' => 'CRISTIAN MEYER HUAMAN BRAVO',
             'email' => 'cristian.huaman@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$bjrMlsmuyxPZsVC63N66VeeTK.nvnqwRgHzlv24baDCcmtmCd9YsG'
         ]);
         DB::table('users')->insert([
@@ -64,6 +76,7 @@ class CreateUsersTable extends Migration
             'name' => 'JORGE LUIS HUAPAYA ROJAS',
             'email' => 'jorge.huapaya@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$vBXoXNkJ7Sdqch.7M0YX5Ot9mkVEn6MV6s8PkPDigV9GdmY5ysi/m'
         ]);
         DB::table('users')->insert([
@@ -73,6 +86,7 @@ class CreateUsersTable extends Migration
             'name' => 'JOSUE WILLIAM HUGO QUISPE',
             'email' => 'jouse.hugo@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$IuOSiZ2RBHYHzKpaQUaTyu/rrVxfWGtJF9fYFnmBN0CnbPAKII74q'
         ]);
         DB::table('users')->insert([
@@ -82,6 +96,7 @@ class CreateUsersTable extends Migration
             'name' => 'LEANDRA ARACELY LOPEZ VILLEGAS',
             'email' => 'aracely.lopez@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$mXdv3SwLD51A6xhfi2nAouSgXZK2T5xAlK.UY0VZ3dgmdbi0.78eS'
         ]);
         DB::table('users')->insert([
@@ -91,6 +106,7 @@ class CreateUsersTable extends Migration
             'name' => 'KATERIN PADILLA',
             'email' => 'katerin.padilla@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$ALjRaM0eczbWLjEEaeXIW.wUxKWfEWdOu.n5TUyWo/UjKsX6g9OGC'
         ]);
         DB::table('users')->insert([
@@ -100,6 +116,7 @@ class CreateUsersTable extends Migration
             'name' => 'ROSSANA ELIZABETH VILA HUAPAYA',
             'email' => 'rossana.vila@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$ByxdT1oynCxuEiP1GetRP.NJgABiso0KuPrzobIuSFKVY34hNk/s.'
         ]);
         DB::table('users')->insert([
@@ -109,6 +126,7 @@ class CreateUsersTable extends Migration
             'name' => 'JOSE EDUARDO MARIÑAS ABUADBA',
             'email' => 'eduardo.marinas@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$bW54X3YOEUstZtPQarzyBull9tImoXZ0gD4M1piUgJHvqmQe0vnQq'
         ]);
         DB::table('users')->insert([
@@ -118,6 +136,7 @@ class CreateUsersTable extends Migration
             'name' => 'ERIK JIMMY MARIÑAS MENDOZA',
             'email' => 'erik.marinas@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$sR.IlDJ875ynTCI8Pgs5Wea5DZHS60QdyLSd.MWNguXAusmEmlBVe'
         ]);
         DB::table('users')->insert([
@@ -127,6 +146,7 @@ class CreateUsersTable extends Migration
             'name' => 'JUAN JOSE MARIÑAS MENDOZA',
             'email' => 'juan.marinas@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$.cO7ylhPTROeg0GWfQhHKufsPQ1mq9R4E8Y5s6MOygd9vMm9YPtFG'
         ]);
         DB::table('users')->insert([
@@ -136,6 +156,7 @@ class CreateUsersTable extends Migration
             'name' => 'BRANDON JESUS SALDAÑA HUAYLLAZO',
             'email' => 'brandon.saldana@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$H35wXEAU/ToeRL3GCsf4g.soEM7qkeqRf2EECBD7KSdHiNI/CSV6m'
         ]);
         DB::table('users')->insert([
@@ -145,6 +166,7 @@ class CreateUsersTable extends Migration
             'name' => 'JESUS ALEXANDER GARCIA FLORES',
             'email' => 'soporte@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$Ga4/tt/cSgUZXflQkg4LBOfbsqZfH3RP8ZNJNiPkpFZ8hd/X/qKd2'
         ]);
         DB::table('users')->insert([
@@ -154,6 +176,7 @@ class CreateUsersTable extends Migration
             'name' => 'ZULAY DELGADO FRIAS',
             'email' => 'zulay.delgado@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$EI456/hV844Hvml81CecXeZJlYr9pXkhUXaIqJ5gmOSXe9x.fJGo.'
         ]);
         DB::table('users')->insert([
@@ -163,6 +186,7 @@ class CreateUsersTable extends Migration
             'name' => 'JESSICA JOHANA CASTILLO VEGA',
             'email' => 'jessica.castillo@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$kjzlkjbxzRcUxuwhfMsvVORY2EuDxwqe9hBsRvYiFoEmouWegj6sK'
         ]);
         DB::table('users')->insert([
@@ -172,6 +196,7 @@ class CreateUsersTable extends Migration
             'name' => 'DINA JAIRA SOLIS LUGO',
             'email' => 'dina.solis@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$KMoKinARy22SicBJJ.5nA.bR4pXaMc/JkId9ghR8UryNUHMyRRlEe'
         ]);
         DB::table('users')->insert([
@@ -181,6 +206,7 @@ class CreateUsersTable extends Migration
             'name' => 'PAUL ANDRE MARIÑAS ABUHADBA',
             'email' => 'paul.marinas@jjmm.com.pe',
             'sex' => 'M',
+            'country_id' => 'PE',
             'password' => '$2y$10$jpHq5tnUMLPVve4LGQRDv.mEWfLDcECfRfBqTYDh06YX3QYAR73Oi'
         ]);
         DB::table('users')->insert([
@@ -190,6 +216,7 @@ class CreateUsersTable extends Migration
             'name' => 'ANDREA ALEJANDRA ZAVALETA MARIÑAS',
             'email' => 'andrea.zavaleta@jjmm.com.pe',
             'sex' => 'F',
+            'country_id' => 'PE',
             'password' => '$2y$10$65RXxRkHN.5KgW.YuWc2XusKwKpP.mHVsAm.vsQtzzFCWaZrOc9j6'
         ]);
     }

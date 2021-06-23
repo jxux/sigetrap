@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('home')->group(function () {
-        Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->Middleware('can:admin.index');
+        Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::get('/planning', [App\Http\Controllers\HomeController::class, 'planning']);
     });
 

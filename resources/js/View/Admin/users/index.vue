@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Listado de clientes</h3>
+                        <h3 class="card-title">Listado de usuarios</h3>
                         <a class="btn btn-primary btn-sm" @click.prevent="clickCreate()"><i class="fas fa-plus"></i> Nuevo</a>                       
                     </div>
                 </div>
@@ -12,19 +12,19 @@
                     <data-table :resource="resource">
                         <tr slot="heading">
                             <th>#</th>
-                            <th>Código</th>
+                            <th>Nick</th>
                             <th>Nombre</th>
-                            <th>Tipo de documento</th>
-                            <th>Número</th>
+                            <th>Email</th>
+                            <th>Dni</th>
                             <th>Acciones</th>
                         </tr>
                         <tr></tr>
                         <tr slot-scope="{ index, row }" :class="{ disable_color: !row.enabled }">
                             <td>{{ index }}</td>
-                            <td>{{ row.internal_code }}</td>
+                            <td>{{ row.nick_name }}</td>
                             <td>{{ row.name }}</td>
-                            <td>{{ row.document_type }}</td>
-                            <td>{{ row.number }}</td>
+                            <td>{{ row.email }}</td>
+                            <td>{{ row.dni }}</td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-info"  @click.prevent="clickCreate(row.id)"><i class="far fa-edit"></i></button>

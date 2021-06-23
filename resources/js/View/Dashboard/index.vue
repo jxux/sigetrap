@@ -12,7 +12,7 @@
         </div>
         <b-card no-body v-if="items != ''">
             <b-tabs card fill>
-                <b-tab v-for="(item, index) in items" :key="index" :title="item.user.name" active>
+                <b-tab v-for="(item, index) in items" :key="index" :title="item.user.nick_name" active>
                     <b-card-title>Hora de creacción: {{ moment(item.created_at).format('H:mm a') }}</b-card-title>
                     <b-card-text>
                         <pre>{{ item.description }}</pre>
