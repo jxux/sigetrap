@@ -27,7 +27,7 @@
                             <td>{{ row.dni }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-info"  @click.prevent="clickCreate(row.id)"><i class="far fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-info"  @click="clickCreate(row.id)"><i class="far fa-edit"></i></button>
                                     <button type="button" class="btn btn-sm btn-danger" @click.prevent="clickDelete(row.id)"><i class="far fa-trash-alt"></i></button>
                                 </div>
                             </td>

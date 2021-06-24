@@ -39,8 +39,31 @@
                 </a>
             </li>
 
-            <li class="nav-item @if(request()->routeIs('accounts') || request()->routeIs('costs') || request()->routeIs('persons') || request()->routeIs('users')) menu-open @endif">
-                <a href="#" class="nav-link @if(request()->routeIs('accounts') || request()->routeIs('costs') || request()->routeIs('persons')  || request()->routeIs('users')) active @endif">
+            <li class="nav-item @if(request()->routeIs('persons') || request()->routeIs('users.index')) menu-open @endif">
+                <a href="#" class="nav-link @if(request()->routeIs('persons')  || request()->routeIs('users.index')) active @endif">
+                    <i class="nav-icon fas fa-copy"></i>
+                    <p>Administrador<i class="fas fa-angle-left right"></i>
+                        {{-- <span class="badge badge-info right">6</span> --}}
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ url('/persons') }}" class="nav-link @if(request()->routeIs('persons')) active @endif">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Clientes</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/users') }}" class="nav-link @if(request()->routeIs('users.index')) active @endif">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item @if(request()->routeIs('accounts') || request()->routeIs('costs') || request()->routeIs('roles.index')) menu-open @endif">
+                <a href="#" class="nav-link @if(request()->routeIs('accounts') || request()->routeIs('costs') || request()->routeIs('roles.index')) active @endif">
                     <i class="nav-icon fas fa-copy"></i>
                     <p>Configuración<i class="fas fa-angle-left right"></i>
                         {{-- <span class="badge badge-info right">6</span> --}}
@@ -60,20 +83,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url('/persons') }}" class="nav-link @if(request()->routeIs('persons')) active @endif">
+                        <a href="{{ url('/roles') }}" class="nav-link @if(request()->routeIs('roles.index')) active @endif">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Clientes</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/users') }}" class="nav-link @if(request()->routeIs('users')) active @endif">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Usuarios</p>
+                            <p>Roles</p>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-chart-pie"></i>
                     <p>
@@ -230,7 +247,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

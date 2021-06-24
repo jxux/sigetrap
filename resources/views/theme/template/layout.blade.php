@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset("assets/dist/css/adminlte.min.css")}}">
+    {{-- @livewireStyles --}}
     @yield('styles')
 </head>
 
@@ -65,6 +66,8 @@
         </aside>
         <!-- /.control-sidebar -->
     </div>
+
+    @livewireScripts
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->

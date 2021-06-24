@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Config\RoleController;
 use App\Http\Controllers\Config\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('web/index');
+});
+
+Route::get('/calamar', function () {
+    return view('web/calamar');
+});
+
+Route::get('/peces', function () {
+    return view('web/peces');
+});
+
+Route::get('/contactanos', function () {
+    return view('web/contactanos');
 });
 
 Auth::routes();
@@ -71,7 +84,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('users')->group(function () {
-        Route::get('/', [App\Http\Controllers\Config\UserController::class, 'index'])->name('users');
+        // Route::get('/', [App\Http\Controllers\Config\UserController::class, 'index'])->name('users');
+        // Route::get('/{user}/edit', [App\Http\Controllers\Config\UserController::class, 'edit'])->name('users.edit');
+        // Route::put('/update', [App\Http\Controllers\Config\UserController::class, 'update'])->name('users.update');
         Route::get('/columns', [App\Http\Controllers\Config\UserController::class, 'columns']);
         Route::get('/records', [App\Http\Controllers\Config\UserController::class, 'records']);
         Route::get('/record/{id}', [App\Http\Controllers\Config\UserController::class, 'record']);
@@ -81,5 +96,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/enabled/{type}/{id}', [App\Http\Controllers\Config\UserController::class, 'enabled']);
     });
     // Route::resource('users', UserController::class)->only('index', 'edit', 'update')->names('users');
-
+    Route::resource('roles', RoleController::class)->names('roles');
+    Route::resource('users', UserController::class)->only('index', 'edit', 'update')->names('users');
 });

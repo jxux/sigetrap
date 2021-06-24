@@ -19,7 +19,8 @@
     </div>
     <section class="content">
         <div class="container-fluid">
-            <User/>
+            @livewire('admin.users.index')
+            {{-- <User/> --}}
         </div>
     </section>
 @endsection

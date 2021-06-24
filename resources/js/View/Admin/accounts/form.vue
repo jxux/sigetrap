@@ -50,7 +50,6 @@ export default {
             this.nameState = null
             this.codeState = null
             this.create()
-            
         },
         handleOk(bvModalEvt) {
             // Prevent modal from closing

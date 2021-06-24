@@ -35,6 +35,16 @@ class UserController extends Controller{
         return view('config.users');
     }
 
+    public function edit(User $user){
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
+    }
+
+    public function update(Request $request, User $user){
+        $user->roles()->sync($request->roles);
+        return redirect()->route('users.edit', $user)->with('info', 'Se actualizo los roles con exito');
+    }
+
     public function records(Request $request){
         if ($request->value) {
             $records = User::where($request->column, 'like', "%{$request->value}%")
@@ -45,14 +55,6 @@ class UserController extends Controller{
         return new UserCollection($records->paginate(20));
     }
 
-    public function edit(User $user){
-        $roles = Role::all();
-        return view('admin.users.edit', compact('user', 'roles'));
-    }
-
-    public function update(Request $request, User $user){
-        $user->roles()->sync($request->roles);
-    }
 
     public function tables(){
         $countries = Country::whereActive()->orderByDescription()->get();
