@@ -19,6 +19,11 @@ use Illuminate\Http\Request;
 
 class PersonsController extends Controller{
 
+    public function __construct(){
+        $this->middleware('can:persons.index')->only('index');
+        // $this->middleware('can:persons.edit')->only('edit', 'update');
+    }
+
     public function columns(){
         return [
             'name' => 'Nombre',

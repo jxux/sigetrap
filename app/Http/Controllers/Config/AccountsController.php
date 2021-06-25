@@ -10,6 +10,11 @@ use Exception;
 use Illuminate\Http\Request;
 
 class AccountsController extends Controller{
+
+    public function __construct(){
+        $this->middleware('can:accounts.index')->only('index');
+        // $this->middleware('can:admin.persons.edit')->only('edit', 'update');
+    }
     
     public function columns(){
         return [

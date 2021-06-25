@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class CostsController extends Controller{
 
+    public function __construct(){
+        $this->middleware('can:costs.index')->only('index');
+        // $this->middleware('can:admin.persons.edit')->only('edit', 'update');
+    }
+
     public function columns(){
         return [
             'name' => 'Nombre',
